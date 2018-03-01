@@ -106,7 +106,12 @@ class HLFConnectionManager extends ConnectionManager {
         const method = 'getStoreLocation';
         LOG.entry(method, ccp);
         let pathToUse;
-        if (ccp.cardName) {
+        
+        let { customClientDataPath } = ccp
+        if( customClientDataPath ){
+          pathToUse = path.join(composerUtil.homeDirectory(), '.composer', customClientDataPath, ccp.cardName);
+        }
+        else if (ccp.cardName) {
             pathToUse = path.join(composerUtil.homeDirectory(), '.composer', 'client-data', ccp.cardName);
         } else {
             pathToUse = path.join(composerUtil.homeDirectory(), '.composer', 'temp', 'transient');
